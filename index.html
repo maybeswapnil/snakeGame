@@ -1,0 +1,97 @@
+<h1>snake by chemo</h1>
+<canvas id="main" width="1200px" height="800px"></canvas>
+<audio id="death"><source src="sound/death.mp3"></audio>
+<audio id="eat"><source src="sound/eat.mp3"></audio>
+<style link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@500&display=swap" rel="stylesheet"> 
+    
+    h1 {
+        text-align: center;
+        font-family: 'Comfortaa', cursive;
+    }
+    canvas {
+        display: block;
+        margin: auto;
+    }
+</style>
+<script>
+        window.onload = () => {
+            canv = document.getElementById("main");
+            ctx = canv.getContext("2d");
+            document.addEventListener("keydown", keyPush);
+            setInterval(snakeGame, 1000/15);
+        }
+
+        px=py=10;
+        gs=20
+        tc=40;
+        tcx=60;
+        ax=ay=15;
+        xv=yv=0;
+        trail=[];
+        tail=5;
+
+        function snakeGame() {
+            px+=xv;
+            py+=yv;
+            if(px<0) {
+                px=tcx-1;
+            }
+            if(px>tcx-1) {
+                px = 0;
+            }
+            if(py<0) {
+                py= tc-1;
+            }
+            if(py>tc-1) {
+                py = 0;
+            }
+
+            ctx.fillStyle="black";
+            ctx.fillRect(0,0,canv.width, canv.height)
+
+            ctx.fillStyle="#b6b428";
+            for(var i = 0;i<trail.length;i++) {
+                ctx.fillRect(trail[i].x*gs, trail[i].y*gs, gs-2, gs-2)
+                if(px==trail[i].x && py==trail[i].y) {
+                    document.getElementById("death").play();
+                    tail=5;
+                }
+            }
+            trail.push({x:px, y:py});
+            while(trail.length>tail) {
+                trail.shift();
+            }
+
+            if(ax==px && ay==py) {
+                document.getElementById("eat").play();
+                tail++;
+                ax = Math.floor(Math.random()*tcx);
+                ay = Math.floor(Math.random()*tc);
+            }
+
+            ctx.fillStyle="red";
+            ctx.fillRect(ax*gs, ay*gs, gs-2, gs-2);
+        }
+
+        function keyPush(evt) {
+            switch(evt.keyCode) {
+                case 37: 
+                        xv=-1;
+                        yv=0;
+                        break;
+                case 38: 
+                        xv=0;
+                        yv=-1;
+                        break;
+                case 39: 
+                        xv=1;
+                        yv=0;
+                        break;
+                case 40: 
+                        xv=0;
+                        yv=1;
+                        break;
+            }
+        }
+
+</script>
