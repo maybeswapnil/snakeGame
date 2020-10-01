@@ -1,24 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Peddana&display=swap");
 
-h1 {
-    text-align: center;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 40px;
+* {
+    margin: 0;
+    padding: 0;
 }
+
 canvas {
     display: block;
     margin: auto;
-    padding-top: 30px;
-}
-#button {
-    display: block;
-    margin: auto;
+    padding-top: 70px;
 }
 
-#score {
-    font-size: 35px;
-    padding-left: 50px;
-    padding-top: 350px;
-    position: absolute;
-    font-family: 'Courier New', Courier, monospace;
-}
+

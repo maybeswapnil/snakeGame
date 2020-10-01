@@ -1,12 +1,10 @@
-var xcor = [1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3];
-var ycor = [1, 2, 3, 4, 1, 2, 3, 4, 5, 1, 2, 3, 4];
-var score = [];
+var score = [0];
 
-function doit() {
+window.onload = () => {
     canv = document.getElementById("main");
     ctx = canv.getContext("2d");
     document.addEventListener("keydown", keyPush);
-    var turnon = setInterval(snakeGame, 1000/15);
+    var turnon = setInterval(snakeGame, 1000/8);
 }
 px=py=10;
 gs=20
@@ -33,6 +31,7 @@ function snakeGame() {
         py = 0;
     }
 
+
 ctx.fillStyle="black";
 ctx.fillRect(0,0,canv.width, canv.height)
 
@@ -43,29 +42,12 @@ for(var i = 0;i<trail.length;i++) {
         document.getElementById("death").play();
         console.log(tail);
         px=py=10;
-        if(tail>Math.max(...score)) {
-            document.getElementById("score").textContent = "High Score: " + tail;
-        }
-        score.push(tail);
-        tail=5;
-        sleep(1500);
-    }
-    if(xcor.includes(px) && ycor.includes(py)) {
-        document.getElementById("death").play();
-        console.log(tail);
-        px=py=10;
-        if(tail>Math.max(...score)) {
-        document.getElementById("score").textContent = "High Score: " + tail;
-        }
         score.push(tail);
         tail=5;
         sleep(1500);
     }
 }
-ctx.fillStyle="white";
-for(var i = 0;i<xcor.length;i++) {
-    ctx.fillRect(xcor[i]*gs, ycor[i]*gs, gs-2, gs-2)
-}
+
 
 trail.push({x:px, y:py});
 while(trail.length>tail) {
@@ -81,6 +63,11 @@ if(ax==px && ay==py) {
 
 ctx.fillStyle="#f7022a";
 ctx.fillRect(ax*gs, ay*gs, gs-8, gs-8);
+
+
+ctx.font = "30px ArcadeClassic"
+ctx.fillStyle="white";
+ctx.fillText("highscore: " + Math.max(...score), 20, 40)
 }
 
 function keyPush(evt) {
@@ -109,7 +96,7 @@ function sleep(miliseconds) {
 
     }
 
-        }
+}
 function getData(score) {
             
     let fs = require('fs');
